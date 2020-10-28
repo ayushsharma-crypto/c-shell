@@ -1,0 +1,77 @@
+pwd
+cat file1.txt
+cat file1.txt file2.txt
+sleep 4 &
+jobs
+cat file.txt | head -2 | wc
+cat file1.txt | head -2 | wc
+ls
+pwd
+cd ~
+cd ..
+cd
+cd q
+cd ~
+cd -
+cd ~
+ls
+ls -la
+pinfo
+pwd
+cd ~
+ls
+ls -la
+pinfo
+ ~
+pwd
+cd ~
+cd ..
+cd
+cd q
+cd ~
+cd -
+c
+ls
+pwd
+cd ~
+cd ..
+cd
+cd q
+cd ~
+
+d
+ wc
+ls
+pwd
+cd ~
+cd ..
+pwd
+cd ~
+wc
+ls
+pwd
+txt | head -2 | wc
+ls
+e1.txt | head -2 | wc
+e1.txt file2.txt
+put.txt
+pinfo
+pingfo
+ output.txt
+pinfo
+
+ff file1.txt file2.txt > output.txt
+
+al
+
+e1.txt file2.txt
+
+file1.txt
+f file1.txt file2.txt 
+le2.txt
+quit
+.txt
+sort file2.txt
+ file2.txt
+ file1.txt file2.txt
+file1.txt file2.txt > output.txt
