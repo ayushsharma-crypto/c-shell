@@ -6,7 +6,7 @@ int main()
 {
     if(setup())
     {
-        perror("SETUP:");
+        perror("SETUP");
         return 1;
     }
 
@@ -14,9 +14,15 @@ int main()
     {
         if(prompt()) 
         {
-            perror("PROMPT DISPLAY:");
-            return -1;
+            perror("PROMPT DISPLAY");
+            return 1;
         }
+        // if(input_cmd())
+        // {
+        //     perror("READ INPUT");
+        //     return 1;
+        // }
+        break;
     }
     return 0;
 }
