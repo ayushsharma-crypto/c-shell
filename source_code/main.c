@@ -11,9 +11,10 @@ int main()
     }
 
     ssize_t input_sz=0;
+    ssize_t buffr_sz=0;
     char* input_line=NULL;
     while(1)
-    {
+    {   
         free(input_line);
         if(prompt()) 
         {
@@ -21,7 +22,7 @@ int main()
             return 1;
         }
 
-        input_sz=getline(&input_line,&input_sz,stdin);
+        input_sz=getline(&input_line,&buffr_sz,stdin);
         if(input_sz<=0)
         {
             free(input_line);

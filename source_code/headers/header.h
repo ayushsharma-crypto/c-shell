@@ -21,7 +21,7 @@
 #define HOST_SZ 100
 #define CRWD_SZ 500
 #define STRG_SZ 1024
-#define MAX_ONE_TIME_CMD 100
+#define MAX_ONE_TIME_CMD 600
 
 char* HOME_DIRECTORY;
 

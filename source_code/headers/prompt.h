@@ -7,5 +7,4 @@ int execute(char* input_line);
 void goodbye();
 char* my_malloc(char* storage,int size);
 char** parse(char* input_line, char* delim_str);
-int count_chars (const char* str, char c);
 #endif

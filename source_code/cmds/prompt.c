@@ -28,20 +28,6 @@ void goodbye()
     printf(ANSI_GREEN_BOLD "#############################\n\n\n\n"ANSI_DEFAULT);
 }
 
-
-int count_chars (const char* str, char c) {
-    // counts the number of occurences of c in str
-
-    size_t len = strlen(str);
-    size_t count = 0;
-    for (size_t i = 0; i < len; i++) {
-        if (str[i] == c) {
-            count++;
-        }
-    }
-    return count;
-}
-
 char* my_malloc(char* storage,int size)
 {
     // allocates memory if possible.
@@ -58,6 +44,7 @@ int prompt()
     user = my_malloc(user,USER_SZ);
     crwd = my_malloc(crwd,CRWD_SZ);
     host = my_malloc(host,HOST_SZ);
+    
     if(!host || !crwd || !user) return 1;
     user = getlogin();
     if(!user || !getcwd(crwd, CRWD_SZ) || gethostname(host,HOST_SZ)==-1) return 1;
@@ -99,19 +86,18 @@ int prompt()
 
 char** parse(char* input_line, char* delim_str)
 {
-    size_t len_array = count_chars(input_line, delim_str[0]) + 1;
     int i=0;
-    char** token = malloc(sizeof(char*)*len_array);
+    char** token = (char**)malloc(sizeof(char*)*MAX_ONE_TIME_CMD);
     token[0] = strtok(input_line,delim_str);
     while (token[i]!=NULL)
-        token[i++]=strtok(NULL,delim_str);
+        token[++i]=strtok(NULL,delim_str);
     return token;
 }
 
 int execute(char* input_line)
 {
     // parse for semi-colon separeted commands.
+    input_line[strlen(input_line)-1]='\0';
     char **cmd = parse(input_line,";");
-    int i=0;
-    while(cmd[i]!=NULL) printf("%s\n",cmd[i++]);
+    free(cmd);
 }
