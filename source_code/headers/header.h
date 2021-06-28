@@ -21,9 +21,11 @@
 #define HOST_SZ 100
 #define CRWD_SZ 500
 #define STRG_SZ 1024
+#define MAX_ONE_TIME_CMD 100
 
 char* HOME_DIRECTORY;
 
+pid_t SHELL_PID;
 
 #define ANSI_RED "\033[0;31m"
 #define ANSI_GREEN "\033[0;32m"
@@ -36,10 +38,5 @@ char* HOME_DIRECTORY;
 #define ANSI_DEFAULT "\033[0m"
 #define ANSI_CLEAR "\033[2J\033[1;1H"
 #define ANSI_BLUE_BOLD "\033[1;34m"
-
-
-pid_t SHELL_PID;
-pid_t FG_CHILD_PID;
-char FG_CHILD_PNAME[STRG_SZ];
 
 #endif
