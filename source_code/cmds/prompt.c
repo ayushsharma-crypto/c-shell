@@ -35,8 +35,8 @@ int prompt()
 
     char *print_line;
     print_line = my_malloc(print_line,STRG_SZ);
-    print_line = strcat(print_line,ANSI_RED_BOLD);
-    print_line = strcat(print_line,"┌[ ");
+    print_line = strcpy(print_line,ANSI_RED_BOLD);
+    print_line = strcat(print_line,"\n┌[ ");
     print_line = strcat(print_line,user);
     print_line = strcat(print_line," @ ");
     print_line = strcat(print_line,host);
@@ -54,7 +54,7 @@ int prompt()
     print_line = strcat(print_line,"└> ");
     print_line = strcat(print_line,ANSI_DEFAULT);
 
-    printf("%s",print_line);
+    write(STDOUT_FILENO,print_line,strlen(print_line)+1);
     free(print_line);
     return 0;
 }

@@ -21,7 +21,6 @@ int main()
             perror("PROMPT DISPLAY");
             return 1;
         }
-
         input_sz=getline(&input_line,&buffr_sz,stdin);
         if(input_sz<=0)
         {
@@ -30,6 +29,7 @@ int main()
             break;
         }
         execute(input_line);
+
     }
 
     goodbye();
