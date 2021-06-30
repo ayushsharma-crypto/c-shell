@@ -1,5 +1,6 @@
 #include "headers/header.h"
 #include "headers/prompt.h"
+#include "headers/execution.h"
 
 
 int main()
@@ -14,8 +15,7 @@ int main()
     ssize_t buffr_sz=0;
     char* input_line=NULL;
     while(1)
-    {   
-        free(input_line);
+    {
         if(prompt()) 
         {
             perror("PROMPT DISPLAY");
