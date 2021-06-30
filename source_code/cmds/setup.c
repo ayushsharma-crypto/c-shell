@@ -9,6 +9,11 @@ int setup()
     if(!HOME_DIRECTORY) return 1;
     if(getcwd(HOME_DIRECTORY, CRWD_SZ)==NULL) return 1;
 
+    // setting up Last Working Directory Global Variable
+    LAST_WORKING_DIRECTORY=my_malloc(LAST_WORKING_DIRECTORY,CRWD_SZ);
+    if(!LAST_WORKING_DIRECTORY) return 1;
+    if(getcwd(LAST_WORKING_DIRECTORY, CRWD_SZ)==NULL) return 1;
+
     // getting process ID of current shell
     SHELL_PID = getpid();
 

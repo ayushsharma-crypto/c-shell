@@ -7,8 +7,9 @@ int execute(char* input_line)
 {
     // parse for semi-colon separated commands.
     input_line[strlen(input_line)-1]='\0';
-    char **cmd = parse(input_line,";");
-    if(!cmd) return 1;
+    char **cmd;
+    int arg_count = parse(input_line,";",cmd);
+    if(arg_count<=0) return 1;
     int i=-1;
 
     // running each command separately
@@ -17,15 +18,19 @@ int execute(char* input_line)
         // check piping
         // check redirection
         
+        // parsing the current command w.r.t spaces
+        char **parsed_cmd_vector;
+        int arg_count = parse(cmd[i],SPACE_PARSE, parsed_cmd_vector);
+        if(arg_count<=0) continue;
+        
         // checking for background command
         int bg_proc = 0;
-        if(cmd[i][strlen(cmd[i])-1]==BG_PROC) 
+        if(strcmp(parsed_cmd_vector[arg_count-1],BG_PROC)) 
         {
             bg_proc=1;
-            cmd[i][strlen(cmd[i])-1]='\0';
+            parsed_cmd_vector[--arg_count]=NULL;
         }
 
-        char **parsed_cmd_vector = parse(cmd[i],SPACE_PARSE);
         // checking for builtin command
         int builtin_proc=0;
 
@@ -38,9 +43,6 @@ int execute(char* input_line)
         }
         else if(child_pid == 0)  // child process
         {
-            int success_flag=1;
-            char* buffer = my_malloc(buffer,BUFF_SZ);
-            
             // if command is builtin then run same otherwise use `execvp`
             if(builtin_proc)
             {}
@@ -48,17 +50,8 @@ int execute(char* input_line)
             else if(-1==execvp(parsed_cmd_vector[0],parsed_cmd_vector))
             {
                 perror("EXECVPERR");
-                success_flag=0;
+                exit(EXIT_FAILURE);
             }
-
-            // printing success/failure message on stderr
-            if(success_flag) 
-                sprintf(buffer,"%s with pid %d exited \033[1;32mnormally.\033[0m\n",parsed_cmd_vector[0],getpid());
-            else
-                sprintf(buffer,"%s with pid %d exited \033[1;31mAb-normally.\033[0m\n",parsed_cmd_vector[0],getpid());
-            
-            write(STDERR_FILENO,buffer,BUFF_SZ);
-            free(buffer);
             exit(EXIT_SUCCESS);
         }
         else   // parent process
@@ -77,7 +70,7 @@ int execute(char* input_line)
             }
             else
             {
-                // handle database for background processes.
+                // handle database for background processes & printing on copletio/stopping/killed etc.
             }
         }
     }

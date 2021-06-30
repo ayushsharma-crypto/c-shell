@@ -19,16 +19,19 @@
 
 #define USER_SZ 100
 #define HOST_SZ 100
-#define CRWD_SZ 500
+#define CRWD_SZ 1024
 #define STRG_SZ 1024
 #define BUFF_SZ 600
 #define MAX_ONE_TIME_CMD 600
 
-char* HOME_DIRECTORY;
-
 pid_t SHELL_PID;
 
-#define BG_PROC '&'
+char* HOME_DIRECTORY;
+char* LAST_WORKING_DIRECTORY;
+
+
+
+#define BG_PROC "&"
 #define SPACE_PARSE " \t\r\n"
 #define ANSI_RED "\033[0;31m"
 #define ANSI_GREEN "\033[0;32m"

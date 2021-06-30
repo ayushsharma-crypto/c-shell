@@ -59,13 +59,17 @@ int prompt()
     return 0;
 }
 
-char** parse(char* input_line, char* delim_str)
+int parse(char* input_line, char* delim_str,char** token)
 {
     int i=0;
-    char** token = (char**)malloc(sizeof(char*)*MAX_ONE_TIME_CMD);
-    if(!token) return NULL;
+    token = (char**)malloc(sizeof(char*)*MAX_ONE_TIME_CMD);
+    if(!token) 
+    {
+        perror("MEMORY");
+        return -1;
+    }
     token[0] = strtok(input_line,delim_str);
     while (token[i]!=NULL)
         token[++i]=strtok(NULL,delim_str);
-    return token;
+    return i;
 }

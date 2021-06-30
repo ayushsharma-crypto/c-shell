@@ -29,7 +29,6 @@ int main()
             break;
         }
         execute(input_line);
-
     }
 
     goodbye();
