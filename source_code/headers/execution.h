@@ -15,6 +15,8 @@ int count_param_arg(char** param);
 int cd_cmd(char** param);
 int pwd_cmd(char** param);
 int echo_cmd(char** param);
+int pinfo_cmd(char** param);
+int history_cmd(char** param);
 
 
 // background process

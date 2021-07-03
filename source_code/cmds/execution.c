@@ -25,25 +25,24 @@ int execute(char* input_line)
 
         // checking for background command
         int bg_proc = 0;
-        if(!strcmp(parsed_cmd_vector[arg_count-1],BG_PROC) || 
-            parsed_cmd_vector[arg_count-1][strlen(parsed_cmd_vector[arg_count-1])-1]==BG_PROC[0]
-        ) 
+        if(!strcmp(parsed_cmd_vector[arg_count-1],BG_PROC)) 
         {
             bg_proc=1;
             parsed_cmd_vector[--arg_count]=NULL;
+        }
+        else if(parsed_cmd_vector[arg_count-1][strlen(parsed_cmd_vector[arg_count-1])-1]==BG_PROC[0]) 
+        {
+            bg_proc=1;
+            parsed_cmd_vector[arg_count-1][strlen(parsed_cmd_vector[arg_count-1])-1]='\0';
         }
 
 
         // checking for builtin command
         int builtin_proc_index=-1;
-        for(int i=0;i<sizeof(BUILTIN_CMD)/8;i++)
-        {
-            if(!strcmp(BUILTIN_CMD[i],parsed_cmd_vector[0]))
-            {
-                builtin_proc_index=i;
+        while(BUILTIN_CMD[++builtin_proc_index]!=NULL)
+            if(!strcmp(BUILTIN_CMD[builtin_proc_index],parsed_cmd_vector[0]))
                 break;
-            }
-        }
+        if(BUILTIN_CMD[builtin_proc_index]==NULL) builtin_proc_index=-1;
 
         // forking the process
         int child_pid = fork();
@@ -55,6 +54,7 @@ int execute(char* input_line)
         else if(child_pid == 0)  // child process
         {
             if(builtin_proc_index>=0) exit(EXIT_SUCCESS);
+
             // using execvp for replacing the curr_cmd 
             // with the curr_child process
             if(-1==execvp(parsed_cmd_vector[0],parsed_cmd_vector))
