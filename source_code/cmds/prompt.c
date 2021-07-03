@@ -75,18 +75,3 @@ int parse(char* input_line, char* delim_str,char*** token)
         token[0][++i]=strtok(NULL,delim_str);
     return i;
 }
-
-char* trim(char* str, char c) 
-{
-    // trims occurences of c from front and back
-    // does not modify original pointer, returns new pointer,
-    // but modifies original string. use original pointer to free
-
-    char* t = str;
-    while (*t == c) t++;
-
-    size_t i = strlen(t) - 1;
-    while (t[i] == c) t[i--] = '\0';
-
-    return t;
-}
