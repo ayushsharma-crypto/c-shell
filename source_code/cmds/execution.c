@@ -29,7 +29,7 @@ int execute(char* input_line)
 
         // parsing the current command w.r.t spaces
         char **parsed_cmd_vector;
-        int arg_count = parse(cmd[i],SPACE_PARSE, &parsed_cmd_vector);
+        int arg_count = parse(cmd[i],SPACE_PARSE, &parsed_cmd_vector,sizeof(char*)*MAX_ONE_TIME_CMD);
         if(arg_count<=0) continue;
 
         // checking for background command
