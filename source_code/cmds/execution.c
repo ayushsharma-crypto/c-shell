@@ -86,7 +86,7 @@ int execute(char* input_line)
                 }
                 // check if child ended due to signal
             }
-            else
+            else if(builtin_proc_index<0)
             {
                 // handle database for background processes & printing on copletio/stopping/killed etc.
             }
