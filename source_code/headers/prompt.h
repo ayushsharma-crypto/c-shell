@@ -7,5 +7,5 @@ int prompt();
 int parse(char* input_line, char* delim_str, char*** token);
 void goodbye();
 char* my_malloc(char* storage,int size);
-
+char* trim(char* str, char c);
 #endif

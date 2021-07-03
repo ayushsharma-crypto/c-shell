@@ -15,6 +15,7 @@ int main()
     ssize_t buffr_sz=0;
     char* input_line=NULL;
 
+    printf("Home = %s\n",HOME_DIRECTORY);
     while(1)
     {
         if(prompt()) 
