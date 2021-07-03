@@ -8,7 +8,7 @@ int execute(char* input_line)
     // parse for semi-colon separated commands.
     input_line[strlen(input_line)-1]='\0';
     char **cmd;
-    int arg_count = parse(input_line,";",cmd);
+    int arg_count = parse(input_line,";",&cmd);
     if(arg_count<=0) return 1;
     int i=-1;
 
@@ -17,22 +17,19 @@ int execute(char* input_line)
     {
         // check piping
         // check redirection
-        
+
         // parsing the current command w.r.t spaces
         char **parsed_cmd_vector;
-        int arg_count = parse(cmd[i],SPACE_PARSE, parsed_cmd_vector);
+        int arg_count = parse(cmd[i],SPACE_PARSE, &parsed_cmd_vector);
         if(arg_count<=0) continue;
-        
+
         // checking for background command
         int bg_proc = 0;
-        if(strcmp(parsed_cmd_vector[arg_count-1],BG_PROC)) 
+        if(!strcmp(parsed_cmd_vector[arg_count-1],BG_PROC)) 
         {
             bg_proc=1;
             parsed_cmd_vector[--arg_count]=NULL;
         }
-
-        // checking for builtin command
-        int builtin_proc=0;
 
         // forking the process
         int child_pid = fork();
@@ -43,10 +40,29 @@ int execute(char* input_line)
         }
         else if(child_pid == 0)  // child process
         {
-            // if command is builtin then run same otherwise use `execvp`
-            if(builtin_proc)
-            {}
-            // using execvp for replacing the curr_cmd with the curr_child process
+            // checking for builtin command
+            int builtin_proc_index=-1;
+            for(int i=0;i<sizeof(BUILTIN_CMD)/8;i++)
+            {
+                if(!strcmp(BUILTIN_CMD[i],parsed_cmd_vector[0]))
+                {
+                    builtin_proc_index=i;
+                    break;
+                }
+            }
+
+            // if command is builtin then run same 
+            // otherwise use `execvp`
+            if(builtin_proc_index>=0)
+            {
+                if(-1==(*BUILTIN_FUNC[builtin_proc_index])(parsed_cmd_vector))
+                {
+                    perror("BUILTINERR");
+                    exit(EXIT_FAILURE);            
+                }
+            }
+            // using execvp for replacing the curr_cmd 
+            // with the curr_child process
             else if(-1==execvp(parsed_cmd_vector[0],parsed_cmd_vector))
             {
                 perror("EXECVPERR");
