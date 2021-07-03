@@ -59,12 +59,12 @@ int prompt()
     return 0;
 }
 
-int parse(char* input_line, char* delim_str,char*** token)
+int parse(char* input_line, char* delim_str,char*** token, int allocate_mem)
 {
     // parses provided string input_line w.r.t. characters
     // of delim_str and then stores as form of tokens.
     int i=0;
-    *token = malloc(sizeof(char*)*MAX_ONE_TIME_CMD);
+    *token = malloc(allocate_mem);
     if(!(*token)) 
     {
         perror("MEMORY");

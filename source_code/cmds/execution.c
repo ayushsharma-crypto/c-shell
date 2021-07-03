@@ -3,12 +3,21 @@
 #include "../headers/execution.h"
 
 
+
+int count_param_arg(char** param)
+{
+    int count=-1;
+    while(param[++count]!=NULL);
+    return count;
+}
+
+
 int execute(char* input_line)
 {
     // parse for semi-colon separated commands.
     input_line[strlen(input_line)-1]='\0';
     char **cmd;
-    int arg_count = parse(input_line,";",&cmd);
+    int arg_count = parse(input_line,";",&cmd, sizeof(char*)*MAX_ONE_TIME_CMD);
     if(arg_count<=0) return 1;
     int i=-1;
 

@@ -10,8 +10,13 @@ char** BUILTIN_CMD;
 // list of pointer to functions
 int (**BUILTIN_FUNC)(char**);
 
-// built-in cmds function declaration
+// setup & helper function for builtin cmds
+int built_cmd_setup();
+int history_setup();
+int history_add(char* cmd);
 int count_param_arg(char** param);
+
+// built-in cmds function declaration
 int cd_cmd(char** param);
 int pwd_cmd(char** param);
 int echo_cmd(char** param);
