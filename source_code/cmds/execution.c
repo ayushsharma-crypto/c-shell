@@ -25,10 +25,24 @@ int execute(char* input_line)
 
         // checking for background command
         int bg_proc = 0;
-        if(!strcmp(parsed_cmd_vector[arg_count-1],BG_PROC)) 
+        if(!strcmp(parsed_cmd_vector[arg_count-1],BG_PROC) || 
+            parsed_cmd_vector[arg_count-1][strlen(parsed_cmd_vector[arg_count-1])-1]==BG_PROC[0]
+        ) 
         {
             bg_proc=1;
             parsed_cmd_vector[--arg_count]=NULL;
+        }
+
+
+        // checking for builtin command
+        int builtin_proc_index=-1;
+        for(int i=0;i<sizeof(BUILTIN_CMD)/8;i++)
+        {
+            if(!strcmp(BUILTIN_CMD[i],parsed_cmd_vector[0]))
+            {
+                builtin_proc_index=i;
+                break;
+            }
         }
 
         // forking the process
@@ -40,30 +54,10 @@ int execute(char* input_line)
         }
         else if(child_pid == 0)  // child process
         {
-            // checking for builtin command
-            int builtin_proc_index=-1;
-            for(int i=0;i<sizeof(BUILTIN_CMD)/8;i++)
-            {
-                if(!strcmp(BUILTIN_CMD[i],parsed_cmd_vector[0]))
-                {
-                    builtin_proc_index=i;
-                    break;
-                }
-            }
-
-            // if command is builtin then run same 
-            // otherwise use `execvp`
-            if(builtin_proc_index>=0)
-            {
-                if(-1==(*BUILTIN_FUNC[builtin_proc_index])(parsed_cmd_vector))
-                {
-                    perror("BUILTINERR");
-                    exit(EXIT_FAILURE);            
-                }
-            }
+            if(builtin_proc_index>=0) exit(EXIT_SUCCESS);
             // using execvp for replacing the curr_cmd 
             // with the curr_child process
-            else if(-1==execvp(parsed_cmd_vector[0],parsed_cmd_vector))
+            if(-1==execvp(parsed_cmd_vector[0],parsed_cmd_vector))
             {
                 perror("EXECVPERR");
                 exit(EXIT_FAILURE);
@@ -72,6 +66,14 @@ int execute(char* input_line)
         }
         else   // parent process
         {
+            if(builtin_proc_index>=0)
+            {
+                if(-1==(*BUILTIN_FUNC[builtin_proc_index])(parsed_cmd_vector))
+                {
+                    perror("BUILTINERR");
+                    exit(EXIT_FAILURE);            
+                }
+            }
             // if current command is not background
             // then wait for the child to finish.
             if(!bg_proc)
