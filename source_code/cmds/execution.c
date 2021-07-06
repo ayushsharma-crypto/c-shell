@@ -14,8 +14,13 @@ int count_param_arg(char** param)
 
 int execute(char* input_line)
 {
-    // parse for semi-colon separated commands.
+
     input_line[strlen(input_line)-1]='\0';
+
+    // add to history
+    if(strlen(input_line) && history_add(input_line)) exit(EXIT_FAILURE);
+
+    // parse for semi-colon separated commands.
     char **cmd;
     int arg_count = parse(input_line,";",&cmd, sizeof(char*)*MAX_ONE_TIME_CMD);
     if(arg_count<=0) return 1;

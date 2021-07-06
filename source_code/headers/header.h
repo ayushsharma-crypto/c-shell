@@ -31,11 +31,14 @@ int HISTORY_COUNT;
 
 char* HOME_DIRECTORY;
 char* LAST_WORKING_DIRECTORY;
-char* HISTORY_FILE_NAME;
-char* HISTORY_FILE_PATH;
-char** HISTORY;
 
-
+struct HISTORY_DATA
+{
+    int count;
+    char* filename;
+    char* filepath;
+    char* list[MAX_HISTORY_CMD];
+} HISTORY;
 
 #define BG_PROC "&"
 #define SPACE_PARSE " \t\r\n"

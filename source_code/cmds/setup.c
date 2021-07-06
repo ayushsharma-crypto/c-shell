@@ -5,6 +5,8 @@
 
 int setup()
 {
+    welcome();
+ 
     // setting up Home Directory Global Variable
     HOME_DIRECTORY=my_malloc(HOME_DIRECTORY,CRWD_SZ);
     if(!HOME_DIRECTORY) return 1;
@@ -24,7 +26,6 @@ int setup()
     // history setup
     if(history_setup()) return 1;
 
-    welcome();
     return 0;
 }
 

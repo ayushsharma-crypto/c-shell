@@ -63,6 +63,7 @@ int parse(char* input_line, char* delim_str,char*** token, int allocate_mem)
 {
     // parses provided string input_line w.r.t. characters
     // of delim_str and then stores as form of tokens.
+    // Assumes sufficient memory provided beforehand.
     int i=0;
     *token = malloc(allocate_mem);
     if(!(*token)) 
