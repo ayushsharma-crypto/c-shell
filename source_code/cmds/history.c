@@ -18,7 +18,7 @@ int history_setup()
 
     // setting default list for command history
     char *buffer = my_malloc(buffer,HISTORY_SZ);
-    int fd = open(HISTORY_FILE_PATH, O_RDONLY);
+    int fd = open(HISTORY_FILE_PATH, O_RDONLY|O_CREAT, 0600);
     if(!buffer || fd<0 || read(fd,buffer,HISTORY_SZ)<0)
     {
         perror("HISTORYSETUP");
