@@ -18,7 +18,7 @@ int history_setup()
 
     // setting default list for command history
     char *buffer = my_malloc(buffer,HISTORY_SZ);
-    int fd = open(HISTORY.filepath, O_RDONLY| O_CREAT);
+    int fd = open(HISTORY.filepath, O_RDONLY| O_CREAT, 0777);
     if(!buffer || fd<0 || read(fd,buffer,HISTORY_SZ)<0)
     {
         perror("HISTORYSETUP");
@@ -57,7 +57,8 @@ int history_add(char* cmd)
 
 
     char *buffer = my_malloc(buffer,HISTORY_SZ);
-    int fd = open(HISTORY.filepath, O_WRONLY);
+    printf("filepath = %s\n",HISTORY.filepath);
+    int fd = open((const char*) HISTORY.filepath, O_RDWR);
     if(!buffer || fd<0)
     {
         perror("HISTORYADD");
