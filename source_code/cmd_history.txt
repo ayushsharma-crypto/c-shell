@@ -2,3 +2,11 @@ ls
 pwd
 pinfo
 ps;ls;pwd
+ls
+pwd
+cd ..
+ls
+cd ..
+ls
+cd -
+pwd

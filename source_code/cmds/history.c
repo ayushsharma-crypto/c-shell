@@ -6,19 +6,19 @@ int history_setup()
 {
     // setting history storage file name and path
     HISTORY.filename = "cmd_history.txt";
-    HISTORY.filepath = my_malloc(HISTORY.filepath,strlen(HOME_DIRECTORY) + strlen(HISTORY.filename)+1);
+    HISTORY.filepath = my_malloc(HISTORY.filepath,2*(strlen(HOME_DIRECTORY) + strlen(HISTORY.filename)));
     if(!HISTORY.filepath) 
     {
         perror("HISTORYSETUP");
         return 1;
     }
     strcpy(HISTORY.filepath,HOME_DIRECTORY);
-    strcpy(HISTORY.filepath,"/");
-    strcpy(HISTORY.filepath,HISTORY.filename);
+    strcat(HISTORY.filepath,"/");
+    strcat(HISTORY.filepath,HISTORY.filename);
 
     // setting default list for command history
     char *buffer = my_malloc(buffer,HISTORY_SZ);
-    int fd = open(HISTORY.filepath, O_RDWR| O_CREAT);
+    int fd = open(HISTORY.filepath, O_RDONLY| O_CREAT);
     if(!buffer || fd<0 || read(fd,buffer,HISTORY_SZ)<0)
     {
         perror("HISTORYSETUP");
