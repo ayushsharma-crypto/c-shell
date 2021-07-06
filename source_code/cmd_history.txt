@@ -1,3 +1,20 @@
+i
+j
+k
+l
+m
+o
+p
+q
+r
+s
+t
+u
+v
+history
+ls
 cd ..
 ls
-git status; ls -la
+history
+cd -
+history

@@ -57,8 +57,7 @@ int history_add(char* cmd)
 
 
     char *buffer = my_malloc(buffer,HISTORY_SZ);
-    printf("filepath = %s\n",HISTORY.filepath);
-    int fd = open((const char*) HISTORY.filepath, O_RDWR);
+    int fd = open((const char*) HISTORY.filepath, O_RDWR | O_TRUNC);
     if(!buffer || fd<0)
     {
         perror("HISTORYADD");
@@ -75,4 +74,23 @@ int history_add(char* cmd)
     return 0;
 }
 
-int history_cmd(char** param){}
+int history_cmd(char** param)
+{
+    // checking for correct format.
+    int arg_count = count_param_arg(param);
+    int count_history;
+    if(arg_count == 1) count_history=SHOW_HISTORY_CMD;
+    else if(arg_count ==2) count_history = atoi(param[1]);
+    else
+    {
+        write(STDERR_FILENO,"Unexpected arguments for`history` cmd\n",37);
+        return 1;
+    }
+
+    if(count_history>HISTORY.count) 
+        count_history=HISTORY.count;
+
+    for(int i=HISTORY.count-count_history;i<HISTORY.count;i++) 
+        printf("%s\n",HISTORY.list[i]);
+    return 0;
+}
