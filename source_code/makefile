@@ -4,8 +4,8 @@
 
 CFLAGS = -g
 
-run_shell: main.o prompt.o pwd.o cd.o echo.o pinfo.o history.o builtin.o setup.o execution.o
-	gcc -o run_shell $(CFLAGS) main.o prompt.o pwd.o cd.o echo.o pinfo.o history.o  builtin.o setup.o execution.o
+run_shell: main.o prompt.o pwd.o cd.o echo.o pinfo.o history.o builtin.o setup.o execution.o nightswatch.o
+	gcc -o run_shell $(CFLAGS) main.o prompt.o pwd.o cd.o echo.o pinfo.o history.o  builtin.o setup.o execution.o nightswatch.o
 
 clean:
 	rm -f *.o run_shell
@@ -27,6 +27,9 @@ execution.o: ./cmds/execution.c ./headers/header.h ./headers/execution.h ./heade
 
 history.o: ./cmds/history.c  ./headers/header.h ./headers/execution.h ./headers/prompt.h
 	gcc $(CFLAGS) -c ./cmds/history.c
+
+nightswatch.o: ./cmds/nightswatch.c  ./headers/header.h ./headers/execution.h ./headers/prompt.h
+	gcc $(CFLAGS) -c ./cmds/nightswatch.c
 
 pinfo.o: ./cmds/pinfo.c  ./headers/header.h ./headers/execution.h ./headers/prompt.h
 	gcc $(CFLAGS) -c ./cmds/pinfo.c

@@ -22,6 +22,7 @@ int pwd_cmd(char** param);
 int echo_cmd(char** param);
 int pinfo_cmd(char** param);
 int history_cmd(char** param);
+int nightswatch_cmd(char** param);
 
 
 // background process
